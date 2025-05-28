@@ -1,27 +1,46 @@
 name: build nexjs and mantine
 
 on:
-  pull_request:
+  push:
     branches:
-      - '**'
+      - main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.sha }}
   cancel-in-progress: true
 
 jobs:
-  test_pull_request:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
           cache-dependency-path: '**/yarn.lock'
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+        with:
+          static_site_generator: next
       - name: Install dependencies
         run: yarn
       - name: Run build
-        run: npm run build
+        run: yarn build
       - name: Run tests
-        run: npm test
+        run: yarn test
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./out
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
