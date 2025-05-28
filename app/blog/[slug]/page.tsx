@@ -1,8 +1,18 @@
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { compileMDX } from 'next-mdx-remote/rsc';
+import {
+  Anchor,
+  Badge,
+  Box,
+  Breadcrumbs,
+  Container,
+  Group,
+  Stack,
+  Text,
+  Title,
+} from '@mantine/core';
 import { getAllPosts, getPostBySlug } from '@/lib/blog';
-import { Container, Stack, Title, Text, Group, Badge, Box, Breadcrumbs, Anchor } from '@mantine/core';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -36,7 +46,9 @@ export default async function BlogPost(props: PageProps) {
     <Container size="lg" py="xl">
       <Stack gap="xl">
         <Breadcrumbs>
-          <Anchor href="/" size="sm">Home</Anchor>
+          <Anchor href="/" size="sm">
+            Home
+          </Anchor>
           Blog
         </Breadcrumbs>
 
