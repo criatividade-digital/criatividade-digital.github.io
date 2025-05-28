@@ -1,0 +1,53 @@
+---
+title: "Adv MDX Features for Your Blog"
+thumbnail: "/images/blog/advanced-mdx.jpg"
+publishDate: "2024-01-20"
+updateDate: "2024-01-22"
+tags: ["mdx", "advanced", "components"]
+---
+
+# Advanced MDX Features for Your Blog
+
+MDX allows you to use React components directly in your markdown content, making your blog posts interactive and dynamic.
+
+## What is MDX?
+
+MDX is a format that lets you seamlessly write JSX in your Markdown documents. This means you can import and use React components within your blog posts.
+
+## Using Components in Posts
+
+You can create reusable components and use them in your posts:
+
+```jsx
+import { Callout } from '../components/Callout'
+
+<Callout type="info">
+  This is an info callout that stands out from regular text!
+</Callout>
+```
+
+## Code Highlighting
+
+Code blocks are automatically highlighted:
+
+```javascript
+function greet(name) {
+  return `Hello, ${name}!`;
+}
+
+console.log(greet("World"));
+```
+
+## Interactive Elements
+
+Since this is MDX, you can even include interactive elements and custom styling to make your posts engaging.
+
+## Best Practices
+
+- Keep frontmatter consistent across posts
+- Use descriptive filenames
+- Add relevant tags for better organization
+- Include engaging thumbnails
+- Write clear, scannable content
+
+Start experimenting with MDX to create rich, interactive blog posts!
