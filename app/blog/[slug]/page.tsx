@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { compileMDX } from 'next-mdx-remote/rsc';
 import { getAllPosts, getPostBySlug } from '@/lib/blog';
+import { Container, Stack, Title, Text, Group, Badge, Box, Breadcrumbs, Anchor } from '@mantine/core';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -32,53 +33,67 @@ export default async function BlogPost(props: PageProps) {
   });
 
   return (
-    <div className="blog-post-container">
-      <article className="blog-post">
-        <div className="blog-post-header">
-          <h1>{frontmatter.title}</h1>
-          <div className="blog-post-meta">
-            <time dateTime={frontmatter.publishDate}>
+    <Container size="lg" py="xl">
+      <Stack gap="xl">
+        <Breadcrumbs>
+          <Anchor href="/" size="sm">Home</Anchor>
+          Blog
+        </Breadcrumbs>
+
+        <Stack gap="md">
+          <Title order={1} size="h1">
+            {frontmatter.title}
+          </Title>
+
+          <Group gap="lg" wrap="wrap">
+            <Text size="sm" c="dimmed">
               Published:{' '}
               {new Date(frontmatter.publishDate).toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric',
               })}
-            </time>
+            </Text>
 
             {frontmatter.updateDate && (
-              <time dateTime={frontmatter.updateDate}>
+              <Text size="sm" c="dimmed">
                 Updated:{' '}
                 {new Date(frontmatter.updateDate).toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric',
                 })}
-              </time>
+              </Text>
             )}
-          </div>
+          </Group>
 
-          <div className="blog-post-tags">
+          <Group gap="xs">
             {frontmatter.tags.map((tag) => (
-              <span key={tag} className="blog-tag">
+              <Badge key={tag} variant="light" size="sm">
                 {tag}
-              </span>
+              </Badge>
             ))}
-          </div>
-        </div>
+          </Group>
+        </Stack>
 
-        <div className="blog-post-feature-image">
+        <Box>
           <Image
             src={frontmatter.thumbnail}
             alt={frontmatter.title}
             width={1200}
             height={600}
-            className="blog-post-image"
+            style={{
+              width: '100%',
+              height: 'auto',
+              borderRadius: '8px',
+            }}
           />
-        </div>
+        </Box>
 
-        <div className="blog-post-content">{renderedContent}</div>
-      </article>
-    </div>
+        <Box component="article" style={{ fontSize: '16px', lineHeight: 1.6 }}>
+          {renderedContent}
+        </Box>
+      </Stack>
+    </Container>
   );
 }

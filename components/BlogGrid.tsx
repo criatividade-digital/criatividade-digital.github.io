@@ -17,7 +17,6 @@ export default function BlogGrid({ posts }: BlogGridProps) {
   return (
     <section className="blog-section">
       <div className="container">
-        <h2 className="blog-section-title">Latest Blog Posts</h2>
         <div className="blog-grid">
           {posts.map((post) => (
             <BlogCard key={post.slug} post={post} />

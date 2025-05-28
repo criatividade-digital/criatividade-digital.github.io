@@ -9523,6 +9523,7 @@ __metadata:
     eslint: "npm:^9.23.0"
     eslint-config-mantine: "npm:^4.0.3"
     eslint-config-next: "npm:^15.3.2"
+    eslint-plugin-import: "npm:^2.31.0"
     eslint-plugin-jsx-a11y: "npm:^6.10.2"
     eslint-plugin-react: "npm:^7.37.4"
     gray-matter: "npm:^4.0.3"
