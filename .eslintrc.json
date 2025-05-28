@@ -1,0 +1,9 @@
+{
+  "extends": [
+    "next/core-web-vitals", 
+    "mantine"
+  ],
+  "rules": {
+    "no-console": "warn"
+  }
+}
