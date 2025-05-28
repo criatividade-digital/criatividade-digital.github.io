@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 import { BlogPost } from '../lib/blog';
 
 interface BlogCardProps {
@@ -14,13 +14,7 @@ export default function BlogCard({ post }: BlogCardProps) {
     <article className="blog-card">
       <Link href={`/blog/${slug}`} className="blog-card-link">
         <div className="blog-card-image">
-          <Image
-            src={thumbnail}
-            alt={title}
-            width={400}
-            height={200}
-            className="card-thumbnail"
-          />
+          <Image src={thumbnail} alt={title} width={400} height={200} className="card-thumbnail" />
         </div>
         <div className="blog-card-content">
           <h3 className="blog-card-title">{title}</h3>

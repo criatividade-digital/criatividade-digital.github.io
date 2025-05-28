@@ -1,4 +1,4 @@
-import fs from 'fs/promises';  // Change to async filesystem
+import fs from 'fs/promises'; // Change to async filesystem
 import path from 'path';
 import matter from 'gray-matter';
 
@@ -19,7 +19,7 @@ export interface BlogPost {
 export async function getAllPosts(): Promise<BlogPost[]> {
   try {
     const files = await fs.readdir(BLOG_PATH);
-    
+
     const postsPromises = files
       .filter((file) => file.endsWith('.md') || file.endsWith('.mdx'))
       .map(async (file) => {
@@ -27,7 +27,7 @@ export async function getAllPosts(): Promise<BlogPost[]> {
         const fullPath = path.join(BLOG_PATH, file);
         const fileContent = await fs.readFile(fullPath, 'utf8');
         const { data: frontmatter, content } = matter(fileContent);
-        
+
         return {
           slug,
           frontmatter: {
@@ -40,10 +40,12 @@ export async function getAllPosts(): Promise<BlogPost[]> {
           content,
         };
       });
-    
+
     const posts = await Promise.all(postsPromises);
-    return posts.sort((a, b) => 
-      new Date(b.frontmatter.publishDate).getTime() - new Date(a.frontmatter.publishDate).getTime()
+    return posts.sort(
+      (a, b) =>
+        new Date(b.frontmatter.publishDate).getTime() -
+        new Date(a.frontmatter.publishDate).getTime()
     );
   } catch (error) {
     // If blog directory doesn't exist or there's an error

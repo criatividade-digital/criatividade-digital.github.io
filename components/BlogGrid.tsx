@@ -1,5 +1,5 @@
-import BlogCard from './BlogCard';
 import { BlogPost } from '../lib/blog';
+import BlogCard from './BlogCard';
 
 interface BlogGridProps {
   posts: BlogPost[];

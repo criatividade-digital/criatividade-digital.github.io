@@ -1,7 +1,7 @@
+import BlogGrid from '../components/BlogGrid';
 import { ColorSchemeToggle } from '../components/ColorSchemeToggle/ColorSchemeToggle';
 import { Welcome } from '../components/Welcome/Welcome';
 import { getAllPosts } from '../lib/blog';
-import BlogGrid from '../components/BlogGrid';
 
 export default async function HomePage() {
   const posts = await getAllPosts(); // Add await here
@@ -18,7 +18,7 @@ export default async function HomePage() {
               <p>Your creative digital journey starts here</p>
             </div>
           </section>
-          
+
           <BlogGrid posts={posts} />
         </main>
       </div>

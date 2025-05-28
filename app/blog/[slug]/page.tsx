@@ -1,16 +1,15 @@
-import { getPostBySlug, getAllPosts } from '@/lib/blog';
-import { notFound } from 'next/navigation';
 import Image from 'next/image';
+import { notFound } from 'next/navigation';
 import { compileMDX } from 'next-mdx-remote/rsc';
+import { getAllPosts, getPostBySlug } from '@/lib/blog';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-
 export async function generateStaticParams() {
   const posts = await getAllPosts();
-  return posts.map(post => ({
+  return posts.map((post) => ({
     slug: post.slug,
   }));
 }
@@ -18,20 +17,20 @@ export async function generateStaticParams() {
 export default async function BlogPost(props: PageProps) {
   const params = await props.params;
   const { slug } = params;
-  
+
   const post = await getPostBySlug(slug);
-  
+
   if (!post) {
     notFound();
   }
-  
+
   const { frontmatter, content } = post;
-  
+
   const { content: renderedContent } = await compileMDX({
     source: content,
-    options: { parseFrontmatter: false }
+    options: { parseFrontmatter: false },
   });
-  
+
   return (
     <div className="blog-post-container">
       <article className="blog-post">
@@ -39,16 +38,18 @@ export default async function BlogPost(props: PageProps) {
           <h1>{frontmatter.title}</h1>
           <div className="blog-post-meta">
             <time dateTime={frontmatter.publishDate}>
-              Published: {new Date(frontmatter.publishDate).toLocaleDateString('en-US', {
+              Published:{' '}
+              {new Date(frontmatter.publishDate).toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric',
               })}
             </time>
-            
+
             {frontmatter.updateDate && (
               <time dateTime={frontmatter.updateDate}>
-                Updated: {new Date(frontmatter.updateDate).toLocaleDateString('en-US', {
+                Updated:{' '}
+                {new Date(frontmatter.updateDate).toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric',
@@ -56,16 +57,18 @@ export default async function BlogPost(props: PageProps) {
               </time>
             )}
           </div>
-          
+
           <div className="blog-post-tags">
-            {frontmatter.tags.map(tag => (
-              <span key={tag} className="blog-tag">{tag}</span>
+            {frontmatter.tags.map((tag) => (
+              <span key={tag} className="blog-tag">
+                {tag}
+              </span>
             ))}
           </div>
         </div>
-        
+
         <div className="blog-post-feature-image">
-          <Image 
+          <Image
             src={frontmatter.thumbnail}
             alt={frontmatter.title}
             width={1200}
@@ -73,10 +76,8 @@ export default async function BlogPost(props: PageProps) {
             className="blog-post-image"
           />
         </div>
-        
-        <div className="blog-post-content">
-          {renderedContent}
-        </div>
+
+        <div className="blog-post-content">{renderedContent}</div>
       </article>
     </div>
   );
