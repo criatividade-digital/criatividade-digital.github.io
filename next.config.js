@@ -14,6 +14,13 @@ const nextConfig = {
   
   // Configure pageExtensions to include md and mdx
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
+  
+  // Add static export configuration for GitHub Pages
+  output: 'export',
+  trailingSlash: true,
+  images: {
+    unoptimized: true,
+  },
 }
 
 // Merge MDX config with Next.js config
