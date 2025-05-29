@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Box, Button, Stack, Text, TextInput, Title, Loader, Alert } from '@mantine/core';
-import { IconMail, IconCheck, IconX } from '@tabler/icons-react';
+import { IconCheck, IconMail, IconX } from '@tabler/icons-react';
+import { Alert, Box, Button, Loader, Stack, Text, TextInput, Title } from '@mantine/core';
 
 type SubscribeState = 'idle' | 'loading' | 'success' | 'error';
 
@@ -12,7 +12,7 @@ export default function EmailSubscribe() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!email || !email.includes('@')) return;
 
     setState('loading');
@@ -28,8 +28,8 @@ export default function EmailSubscribe() {
           },
           body: new URLSearchParams({
             e: email,
-            o: 'homepage'
-          })
+            o: 'homepage',
+          }),
         }
       );
 
@@ -82,7 +82,13 @@ export default function EmailSubscribe() {
         </Stack>
 
         {state === 'error' && (
-          <Alert icon={<IconX size="1rem" />} title="Error!" color="red" variant="light" onClose={resetToIdle}>
+          <Alert
+            icon={<IconX size="1rem" />}
+            title="Error!"
+            color="red"
+            variant="light"
+            onClose={resetToIdle}
+          >
             Error sending, try again
           </Alert>
         )}
