@@ -8,6 +8,7 @@ export interface BlogPost {
   slug: string;
   frontmatter: {
     title: string;
+    description: string;
     thumbnail: string;
     publishDate: string;
     updateDate?: string;
@@ -32,6 +33,7 @@ export async function getAllPosts(): Promise<BlogPost[]> {
           slug,
           frontmatter: {
             title: frontmatter.title || 'Untitled',
+            description: frontmatter.description || frontmatter.title,
             thumbnail: frontmatter.thumbnail || '/images/blog/default.jpg',
             publishDate: frontmatter.publishDate,
             updateDate: frontmatter.updateDate,

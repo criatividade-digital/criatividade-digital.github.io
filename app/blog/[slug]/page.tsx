@@ -30,9 +30,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     metadataBase: new URL('https://creativity.digital'),
     title: frontmatter.title,
+    description: frontmatter.description,
     keywords: frontmatter.tags?.join(', '),
     openGraph: {
       title: frontmatter.title,
+      description: frontmatter.description,
       type: 'article',
       publishedTime: frontmatter.publishDate,
       modifiedTime: frontmatter.updateDate,
@@ -49,6 +51,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     twitter: {
       card: 'summary_large_image',
       title: frontmatter.title,
+      description: frontmatter.description,
       images: [frontmatter.thumbnail],
     },
   };
