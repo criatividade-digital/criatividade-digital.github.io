@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { compileMDX } from 'next-mdx-remote/rsc';
@@ -13,7 +14,6 @@ import {
   Title,
 } from '@mantine/core';
 import { getAllPosts, getPostBySlug } from '@/lib/blog';
-import { Metadata } from 'next';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {}; // Or handle 404 metadata if needed
   }
   const { frontmatter } = post;
-    
+
   return {
     metadataBase: new URL('https://creativity.digital'),
     title: frontmatter.title,
@@ -51,9 +51,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: frontmatter.title,
       images: [frontmatter.thumbnail],
     },
-  }
+  };
 }
-
 
 export async function generateStaticParams() {
   const posts = await getAllPosts();
