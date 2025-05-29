@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { Box, Container, Stack, Text, Title } from '@mantine/core';
 import BlogGrid from '../components/BlogGrid';
+import EmailSubscribe from '../components/EmailSubscribe';
 import { getAllPosts } from '../lib/blog';
 
 export const metadata: Metadata = {
@@ -36,6 +37,10 @@ export default async function HomePage() {
 
       <Container size="lg" py="xl">
         <BlogGrid posts={posts} />
+      </Container>
+
+      <Container size="lg">
+        <EmailSubscribe />
       </Container>
     </Stack>
   );
