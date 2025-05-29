@@ -13,7 +13,9 @@ export default function EmailSubscribe() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!email || !email.includes('@')) return;
+    if (!email || !email.includes('@')) {
+      return;
+    }
 
     setState('loading');
 
@@ -22,7 +24,6 @@ export default function EmailSubscribe() {
         'https://script.google.com/macros/s/AKfycbx2r_JrbYKI-OV2N5hVO1x73wklVXilw3-djOsQFV7smcOoJRbj3-QRs7WROV7vzkd5nw/exec',
         {
           method: 'POST',
-          mode: 'cors', // Adicione esta linha
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
