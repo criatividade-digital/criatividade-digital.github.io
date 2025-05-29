@@ -19,7 +19,7 @@ export default function EmailSubscribe() {
 
     try {
       const response = await fetch(
-        'https://script.google.com/macros/s/AKfycbzeCSM1KgIJaXXvVGaM68r54EoBhuf5QA6OezyL0DCwLrFcCdSnzbLrBBCrqqdglc-9RQ/exec',
+        'https://script.google.com/macros/s/AKfycbx2r_JrbYKI-OV2N5hVO1x73wklVXilw3-djOsQFV7smcOoJRbj3-QRs7WROV7vzkd5nw/exec',
         {
           method: 'POST',
           mode: 'cors', // Adicione esta linha
