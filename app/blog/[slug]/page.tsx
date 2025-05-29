@@ -13,10 +13,47 @@ import {
   Title,
 } from '@mantine/core';
 import { getAllPosts, getPostBySlug } from '@/lib/blog';
+import { Metadata } from 'next';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
+  if (!post) {
+    return {}; // Or handle 404 metadata if needed
+  }
+  const { frontmatter } = post;
+    
+  return {
+    metadataBase: new URL('https://creativity.digital'),
+    title: frontmatter.title,
+    keywords: frontmatter.tags?.join(', '),
+    openGraph: {
+      title: frontmatter.title,
+      type: 'article',
+      publishedTime: frontmatter.publishDate,
+      modifiedTime: frontmatter.updateDate,
+      tags: frontmatter.tags,
+      images: [
+        {
+          url: frontmatter.thumbnail,
+          width: 1200,
+          height: 628,
+          alt: frontmatter.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: frontmatter.title,
+      images: [frontmatter.thumbnail],
+    },
+  }
+}
+
 
 export async function generateStaticParams() {
   const posts = await getAllPosts();
