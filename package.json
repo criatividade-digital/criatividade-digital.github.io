@@ -26,6 +26,7 @@
     "@mdx-js/react": "^3.0.0",
     "@next/bundle-analyzer": "^15.2.3",
     "@next/mdx": "^14.0.0",
+    "@next/third-parties": "^15.3.3",
     "@tabler/icons-react": "^3.31.0",
     "gray-matter": "^4.0.3",
     "next": "15.2.3",

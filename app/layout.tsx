@@ -2,6 +2,7 @@ import '@mantine/core/styles.css';
 import '../styles/blog.css';
 
 import React from 'react';
+import { GoogleTagManager } from '@next/third-parties/google';
 import { ColorSchemeScript, mantineHtmlProps, MantineProvider } from '@mantine/core';
 import { theme } from '../theme';
 
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: { children: any }) {
       </head>
       <body>
         <MantineProvider theme={theme}>{children}</MantineProvider>
+        <GoogleTagManager gtmId="G-JWRLC2V7G2" />
       </body>
     </html>
   );
