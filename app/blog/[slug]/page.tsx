@@ -13,6 +13,7 @@ import {
   Text,
   Title,
 } from '@mantine/core';
+import { EmailSubscribe } from '@/components/EmailSubscribe';
 import { getAllPosts, getPostBySlug } from '@/lib/blog';
 
 interface PageProps {
@@ -79,6 +80,7 @@ export default async function BlogPost(props: PageProps) {
   const { content: renderedContent } = await compileMDX({
     source: content,
     options: { parseFrontmatter: false },
+    components: { EmailSubscribe },
   });
 
   return (

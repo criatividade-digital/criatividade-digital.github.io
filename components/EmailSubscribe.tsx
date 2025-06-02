@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 import { IconCheck, IconMail, IconX } from '@tabler/icons-react';
-import { Alert, Box, Button, Loader, Stack, Text, TextInput, Title } from '@mantine/core';
+import { Alert, Box, Button, Loader, Stack, Text, TextInput } from '@mantine/core';
 
 type SubscribeState = 'idle' | 'loading' | 'success' | 'error';
 
-export default function EmailSubscribe() {
+export function EmailSubscribe() {
   const [email, setEmail] = useState('');
   const [state, setState] = useState<SubscribeState>('idle');
 
@@ -20,19 +20,19 @@ export default function EmailSubscribe() {
     setState('loading');
 
     try {
-      const response = await fetch(
-        'https://script.google.com/macros/s/AKfycbx2r_JrbYKI-OV2N5hVO1x73wklVXilw3-djOsQFV7smcOoJRbj3-QRs7WROV7vzkd5nw/exec',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: new URLSearchParams({
-            e: email,
-            o: 'homepage',
-          }),
-        }
-      );
+      const url =
+        'https://script.google.com/macros/s/AKfycbwEjbsl0mi3x1hQ5X1vsBA0wuVZgpnKNKl6YGjF6cDi1R9EgOTlPonHhBxMa-jUCIorPA/exec';
+      const formData = new URLSearchParams();
+      formData.append('e', email);
+      formData.append('o', 'homepage');
+      formData.append('email', 'a@email.com');
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData.toString(),
+      });
 
       if (response.ok) {
         setState('success');
@@ -41,6 +41,7 @@ export default function EmailSubscribe() {
         setState('error');
       }
     } catch (error) {
+      console.error('Error:', error);
       setState('error');
     }
   };
@@ -49,67 +50,54 @@ export default function EmailSubscribe() {
     setState('idle');
   };
 
-  if (state === 'loading') {
-    return (
-      <Box ta="center" py="xl">
-        <Stack align="center" gap="md">
-          <Loader size="md" />
-          <Text>Sending...</Text>
-        </Stack>
-      </Box>
-    );
-  }
-
   if (state === 'success') {
     return (
-      <Box ta="center" py="xl">
+      <Box py="xl">
         <Alert icon={<IconCheck size="1rem" />} title="Success!" color="green" variant="light">
-          Thank you! Your email was sent!
+          Thank you! I'll keep you posted.
         </Alert>
       </Box>
     );
   }
 
   return (
-    <Box py="xl">
-      <Stack gap="md" maw={400} mx="auto">
-        <Stack gap="xs" ta="center">
-          <Title order={3} size="h3">
-            Stay Updated
-          </Title>
-          <Text c="dimmed">
-            Subscribe to receive updates about creativity and digital innovation
-          </Text>
-        </Stack>
+    <Stack gap="md" maw={400}>
+      {state === 'error' && (
+        <Alert
+          icon={<IconX size="1rem" />}
+          title="Error!"
+          color="red"
+          variant="light"
+          onClose={resetToIdle}
+        >
+          Error sending your email, try again.
+        </Alert>
+      )}
 
-        {state === 'error' && (
-          <Alert
-            icon={<IconX size="1rem" />}
-            title="Error!"
-            color="red"
-            variant="light"
-            onClose={resetToIdle}
-          >
-            Error sending, try again
-          </Alert>
-        )}
-
-        <form onSubmit={handleSubmit}>
-          <Stack gap="sm">
-            <TextInput
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.currentTarget.value)}
-              type="email"
-              required
-              leftSection={<IconMail size="1rem" />}
-            />
+      <form onSubmit={handleSubmit}>
+        <Stack gap="sm">
+          <TextInput
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.currentTarget.value)}
+            type="email"
+            required
+            leftSection={<IconMail size="1rem" />}
+          />
+          {state === 'loading' ? (
+            <Stack align="center" gap="xs">
+              <Loader size="md" />
+              <Text>Sending...</Text>
+            </Stack>
+          ) : (
             <Button type="submit" fullWidth>
               Subscribe
             </Button>
-          </Stack>
-        </form>
-      </Stack>
-    </Box>
+          )}
+        </Stack>
+      </form>
+    </Stack>
   );
 }
+
+export default EmailSubscribe;
